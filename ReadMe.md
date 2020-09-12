@@ -21,6 +21,39 @@ JSX allows us to write HTML elements in JavaScript and place them in the DOM wit
 
 Passsing data as query strings is where you decide to pass the data via a url as opposed to passing it via props or redux.
 
+Use effect brings in lifecyle methods in class based components.
+When  we redirect via the react router we are able to have access to the location and can be able to get the url parameters.
+
+The array passed as a parameter in use effect specifies the instance that useEffect will run.
+
+Socket emit()  after creating an instance of the socket is what passes the data to the backend.
+
+```
+
+**Socket io callbacks**
+
+```
+These happen after specific events have been emitted.
+
+  server side
+  socket.on('join', ({ name, room }, callback) => {
+    const error = true;
+
+    if (error) {
+      callback({ error: 'error' });
+    }
+    console.log(name, room);
+  });
+
+
+  client side(receives the callback)
+  socket.emit('join', { name, room }, ({ error }) => {
+      alert(error);
+    });
+
+Naming of the event emiited by the socket example 'join' should be uniform..both at the
+client and at the server side.
+
 
 
 ```
