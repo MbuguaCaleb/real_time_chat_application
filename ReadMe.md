@@ -54,7 +54,7 @@ These happen after specific events have been emitted.
 Naming of the event emiited by the socket example 'join' should be uniform..both at the
 client and at the server side.
 
-
+When ever i emit an event..I listen for it via socket.on()
 
 ```
 

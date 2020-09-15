@@ -9,6 +9,9 @@ let socket;
 const Chat = ({ location }) => {
   const [name, setName] = useState('');
   const [room, setRoom] = useState('');
+  const [message, setMessage] = useState('');
+  const [messages, setMessages] = useState([]);
+
   const ENDPOINT = 'localhost:5000';
   useEffect(() => {
     const { name, room } = queryString.parse(location.search);
@@ -31,7 +34,39 @@ const Chat = ({ location }) => {
     };
   }, [ENDPOINT, location.search]);
 
-  return <h1>Chat</h1>;
+  //this useeffect only runs when the message changes as shown in the array at the end
+  //responsibe for displaying the admin message
+  useEffect(() => {
+    //message is wha
+    socket.on('message', (message) => {
+      //adding message to all other message
+      setMessages([...messages, message]);
+    });
+  }, [messages]);
+
+  const sendMessage = (event) => {
+    event.preventDefault();
+
+    if (message) {
+      socket.emit('sendMessage', message, () => setMessage(''));
+    }
+  };
+
+  console.log(message, messages);
+
+  return (
+    <div className="outerContainer">
+      <div className="container">
+        <input
+          value={message}
+          onChange={(event) => setMessage(event.target.value)}
+          onKeyPress={(event) =>
+            event.key === 'Enter' ? sendMessage(event) : null
+          }
+        />
+      </div>
+    </div>
+  );
 };
 
 export default Chat;

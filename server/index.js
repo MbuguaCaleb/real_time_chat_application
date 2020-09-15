@@ -21,9 +21,40 @@ const io = socketio(server);
  */
 io.on('connection', (socket) => {
   console.log(`We have a new connection!!!!`);
-
   socket.on('join', ({ name, room }, callback) => {
-    console.log(name, room);
+    const { error, user } = addUser({ id: socket.id, name, room });
+
+    if (error) return callback(error);
+
+    //letting a user join a room if there is no error
+    //this is how i fire events in sockets.
+    //it has a type then a build which is a payload
+    ///this is a welcome message to the user from the admin
+    socket.emit('message', {
+      user: 'admin',
+      text: `${user.name}, welcome to the room ${user.room}`,
+    });
+
+    //Informing all the users in the room that a new user has joined
+    socket.broadcast
+      .to(user.room)
+      .emit('message', { user: 'admin', text: `${user.name},has joined` });
+
+    socket.join(user.room);
+
+    callback();
+  });
+
+  //Event called on the front end when the user emits a message
+  //Even send message is emmited on the frontend.Backend is only listening
+  socket.on('sendMessage', (message, callback) => {
+    const user = getUser(socket.id);
+
+    //sending the message to a particular room
+    io.to(user.room).emit('message', { user: user.name, text: message });
+
+    //important incase you wish to return a response to the front end
+    callback();
   });
 
   socket.on('disconnect', () => {
