@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import queryString from 'query-string';
 import io from 'socket.io-client';
-
+import InfoBar from '../InfoBar/InfoBar';
 import './Chat.css';
 
 let socket;
@@ -37,13 +37,14 @@ const Chat = ({ location }) => {
   //this useeffect only runs when the message changes as shown in the array at the end
   //responsibe for displaying the admin message
   useEffect(() => {
-    //message is wha
+    //message is what we expect from server
     socket.on('message', (message) => {
       //adding message to all other message
       setMessages([...messages, message]);
     });
   }, [messages]);
 
+  //function to send message
   const sendMessage = (event) => {
     event.preventDefault();
 
@@ -57,13 +58,14 @@ const Chat = ({ location }) => {
   return (
     <div className="outerContainer">
       <div className="container">
-        <input
+        <InfoBar room={room} />
+        {/* <input
           value={message}
           onChange={(event) => setMessage(event.target.value)}
           onKeyPress={(event) =>
             event.key === 'Enter' ? sendMessage(event) : null
           }
-        />
+        /> */}
       </div>
     </div>
   );
