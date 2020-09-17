@@ -13,7 +13,6 @@ const Chat = ({ location }) => {
   const [room, setRoom] = useState('');
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
-
   const ENDPOINT = 'localhost:5000';
   useEffect(() => {
     const { name, room } = queryString.parse(location.search);
@@ -68,6 +67,7 @@ const Chat = ({ location }) => {
           sendMessage={sendMessage}
         />
       </div>
+      {/* <TextContainer users={users} /> */}
     </div>
   );
 };
