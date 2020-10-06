@@ -1,3 +1,7 @@
+**Deployed APP URL**
+
+[Deployed chat app ](https://5f7b62b6d5653923fc03e4a6--wizardly-rosalind-b53985.netlify.app/)
+
 **Notes**
 
 ```
